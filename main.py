@@ -9,6 +9,3 @@ if __name__ == "__main__":
     style.theme_use("clam")
     app = PokedexApp(root)
     root.mainloop()
-
-
-    
