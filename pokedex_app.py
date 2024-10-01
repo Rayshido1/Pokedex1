@@ -30,6 +30,8 @@ class PokedexApp:
         self.label_info = tk.Label(master, text="", justify="left", bg="#feffff", bd=20, anchor="center", font=("Arialblack", 10))
         self.label_info.grid(row=4, column=0, sticky="nsew")
 
+        self.pokemon_selected = False
+
         master.bind("<Escape>", self.reset_interface)
         master.bind("<Alt-F4>", self.close_aplication)
         master.bind("<Right>", lambda event: self.change_pokemon("right"))
@@ -45,30 +47,36 @@ class PokedexApp:
 
     def show_pokemon(self, event):
         selected_pokemon = self.combo_pokemon.get()
-        info = pokedex[selected_pokemon]["info"]
-        image_url = pokedex[selected_pokemon]["image"]
-        color = pokedex[selected_pokemon]["color"]
+        if selected_pokemon:
+            info = pokedex[selected_pokemon]["info"]
+            image_url = pokedex[selected_pokemon]["image"]
+            color = pokedex[selected_pokemon]["color"]
 
-        self.label_info.config(text=info)
-        self.master.configure(bg=color)
-        self.frame_line.grid()
-
-        response = requests.get(image_url)                       #armazena os dados da imagem da web
-        img_data = Image.open(BytesIO(response.content))         #armazena os dados em bytes da imagem
-        img_data = img_data.resize((150,150), Image.LANCZOS)
-        img = ImageTk.PhotoImage(img_data)                       #converte a imagem pillow para uma versão do tkinter
-
-        self.label_image.config(image=img)
-        self.label_image.image = img                             # Manter referência da imagem
-
-        self.label_title.config(bg=color)                        # Inclui a cor ao fundo do label         
-        self.label_image.config(bg=color)
+            self.label_info.config(text=info)
+            self.master.configure(bg=color)
+            self.frame_line.grid()
+    
+            response = requests.get(image_url)                       #armazena os dados da imagem da web
+            img_data = Image.open(BytesIO(response.content))         #armazena os dados em bytes da imagem
+            img_data = img_data.resize((150,150), Image.LANCZOS)
+            img = ImageTk.PhotoImage(img_data)                       #converte a imagem pillow para uma versão do tkinter
+    
+            self.label_image.config(image=img)
+            self.label_image.image = img                             # Manter referência da imagem
+    
+            self.label_title.config(bg=color)                        # Inclui a cor ao fundo do label         
+            self.label_image.config(bg=color)
+    
+            self.pokemon_selected = True
+        else:
+            self.pokemon_selected = False
     
     def change_pokemon(self, direction):
         current_index = self.combo_pokemon.current()
-        if direction == "right":
+
+        if direction == "right" and self.pokemon_selected:
             new_index = (current_index + 1) % len(self.combo_pokemon["values"])
-        elif direction == "left":
+        elif direction == "left" and self.pokemon_selected:
             new_index = (current_index - 1) % len(self.combo_pokemon["values"])
         self.combo_pokemon.current(new_index)
         self.show_pokemon(None)
@@ -80,6 +88,8 @@ class PokedexApp:
         self.label_title.config(bg="#feffff")
         self.label_image.config(image="", bg="#feffff")
         self.frame_line.grid_remove()
+
+        self.pokemon_selected = False
 
     def close_aplication(self, event):
         self.master.quit()     
