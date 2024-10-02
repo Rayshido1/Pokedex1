@@ -1,6 +1,6 @@
 # Pokedex
 
-Esse é um projeto (ainda em desenvolvimento) de uma pokedéx utilizando a linguagem python, contendo as informações do pokemon.
+Esse é um projeto de uma pokedéx utilizando a linguagem python e utilizando a biblioteca Tkinter, contendo as informações do pokemon.
 
 
 # Funcionalidades
