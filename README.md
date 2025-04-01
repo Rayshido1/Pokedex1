@@ -9,7 +9,7 @@ Esse é um projeto de uma pokedéx utilizando a linguagem python junto a bibliot
 - Informações detalhadas
 - Selecionar pokemon
 - "Esc" para limpar a pesquisa
-- Navegar pela pokédex utilizando as setas
+- Navegar pela pokédex utilizando os direcionais
 - "alt+f4" para fechar o programa
 
 
