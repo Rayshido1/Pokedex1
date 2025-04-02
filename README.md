@@ -1,4 +1,4 @@
-# Pokedex
+# Pokédex
 
 Esse é um projeto de uma pokedéx utilizando a linguagem python junto a biblioteca Tkinter, contendo as informações do pokemon.
 
